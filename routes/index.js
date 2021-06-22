@@ -2,17 +2,19 @@ var express = require('express');
 var router = express.Router();
 
 const productController = require('../apiServices/products/products.controller');
+const authMiddleware = require('../middlewares/auth');
+const { validateToken } = authMiddleware;
 
-router.get('/', productController.getProducts)
+router.get('/', validateToken , productController.getProducts);
   
-router.get('/:id', productController.getProductById)
+router.get('/:id', validateToken, productController.getProductById);
 
-router.post('/', productController.createProduct)
+router.post('/', validateToken, productController.createProduct);
 
-router.put('/:id', productController.editProduct)
+router.put('/:id', validateToken, productController.editProduct);
   
-router.delete('/', productController.deleteAllProducts)
+router.delete('/', validateToken, productController.deleteAllProducts);
 
-router.delete('/:id', productController.deleteProductById)
+router.delete('/:id', validateToken, productController.deleteProductById);
 
 module.exports = router;
